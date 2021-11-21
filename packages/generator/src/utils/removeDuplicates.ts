@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/generator-helper'
 
-export const removeDublicates = (
+export const removeDuplicates = (
   arr: any,
   key: string
 ): {

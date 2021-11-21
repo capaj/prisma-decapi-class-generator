@@ -1,19 +1,22 @@
+export interface IFieldsWithMetaData {
+  fieldName: string
+  modelName: string
+  forceNullable?: boolean
+  skip?: boolean
+}
+
 export const ExtractFieldsModifications = (dataModel: string) => {
-  let hideField = false
-  let privateField = false
+  let skipField = false
+  let forceNullableField = false
   let currentCodeBlock: { name: string; type: 'model' | 'enum' }
-  const extractedData: {
-    fieldName: string
-    modelName: string
-    private?: boolean
-    hide?: boolean
-  }[] = []
+
+  const extractedData: IFieldsWithMetaData[] = []
 
   dataModel.split('\n').forEach((line) => {
     if (line.includes('@skip')) {
-      return (hideField = true)
+      return (skipField = true)
     } else if (line.includes('@nullable')) {
-      return (privateField = true)
+      return (forceNullableField = true)
     }
 
     if (line.includes('model')) {
@@ -27,26 +30,42 @@ export const ExtractFieldsModifications = (dataModel: string) => {
       .filter((e) => e !== '')
       .map((e) => e.replace('\r', ''))[0]
 
-    if (hideField) {
+    if (skipField) {
       extractedData.push({
         fieldName,
-        hide: true,
-        modelName: currentCodeBlock.name,
+        skip: true,
+        modelName: currentCodeBlock.name
       })
 
       // Reset
-      hideField = false
-    } else if (privateField) {
+      skipField = false
+    } else if (forceNullableField) {
       extractedData.push({
         fieldName,
-        private: true,
-        modelName: currentCodeBlock.name,
+        forceNullable: true,
+        modelName: currentCodeBlock.name
       })
 
       // Reset
-      privateField = false
+      forceNullableField = false
     }
   })
 
   return extractedData
+}
+
+export const hideOrPrivate = (
+  extractedData: IFieldsWithMetaData[],
+  fieldName: string,
+  modelName: string
+) => {
+  const isSkip = !!extractedData.find(
+    (e: any) => e.fieldName === fieldName && modelName === e.modelName
+  )?.forceNullable
+
+  const isForceNullable = !!extractedData.find(
+    (e: any) => e.fieldName === fieldName && modelName === e.modelName
+  )?.skip
+
+  return { isForceNullable, isSkip }
 }
