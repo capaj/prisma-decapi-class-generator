@@ -1,9 +1,9 @@
-import { Field, ObjectType, Int } from 'type-graphql'
 import { User } from './User'
+import { Field, ObjectType, Int } from 'decapi'
 
 @ObjectType()
 export class FollowerScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
@@ -15,10 +15,10 @@ export class FollowerScalars {
 
 @ObjectType()
 export class Follower extends FollowerScalars {
-  @Field((_type) => User)
+  @Field()
   followed_user: User
 
-  @Field((_type) => User)
+  @Field()
   follower_user: User
 
   // skip overwrite 👇

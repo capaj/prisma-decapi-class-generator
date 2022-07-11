@@ -1,11 +1,12 @@
-import { Field, ObjectType, Int } from 'type-graphql'
 import { User } from './User'
 import { Post } from './Post'
 import { Comment } from './Comment'
+import { Field, ObjectType } from 'decapi'
+import { Field, ObjectType, Int } from 'decapi'
 
 @ObjectType()
 export class HeartScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
@@ -17,14 +18,14 @@ export class HeartScalars {
 
 @ObjectType()
 export class Heart extends HeartScalars {
-  @Field((_type) => User)
+  @Field()
   user: User
 
-  @Field((_type) => Post, { nullable: true })
-  post?: Post
+  @Field()
+  post: Post | null
 
-  @Field((_type) => Comment, { nullable: true })
-  comment?: Comment
+  @Field()
+  comment: Comment | null
 
   // skip overwrite 👇
 }

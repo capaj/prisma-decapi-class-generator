@@ -100,19 +100,17 @@ generatorHandler({
         )
 
         if (isHide) return { hide: true, type: field.type }
+        const optionalCondition = !field.isRequired
 
         const fieldType = `${convertType(
           field.type as string,
           exportedNamePrefix,
           exportedNameSuffix,
-        )!}${field.isList ? '[]' : ''}`
+        )!}${field.isList ? '[]' : ''}${optionalCondition ? ' | null' : ''}`
 
         const decoratorType = () => {
           // Special Cases
-          const type = (type: string) =>
-            `(${
-              options.generator.config.removeTypeInFieldDecorator ? '' : '_type'
-            }) => ${type}`
+          const type = (type: string) => `{ type: ${type} }`
 
           const modifiedFieldType =
             field.kind === 'scalar'
@@ -142,16 +140,19 @@ generatorHandler({
             } else if (convertedType === 'Buffer') {
               return 'GraphQLScalars.ByteResolver'
             } else {
-              return modifiedFieldType
+              return null
             }
           }
 
           const typeGraphQLType = getEquivalentType()
+          if (!typeGraphQLType) {
+            return ''
+          }
 
           if (field.isList) {
-            return type(`[${typeGraphQLType}]`)
+            return ''
           } else if (field.kind === 'object' && !field.isList) {
-            return type(modifiedFieldType as string)
+            return ''
           }
 
           if (
@@ -169,53 +170,9 @@ generatorHandler({
           return type(typeGraphQLType as string)
         }
 
-        const optionalCondition = !field.isRequired
-        const fieldName = `${field.name}${optionalCondition ? '?' : ''}`
+        const fieldName = field.name
 
-        const decoratorObject = () => {
-          let object: any = {}
-
-          const editedOptions = decoratorObjects?.find(
-            (e) => e.field === fieldName.replace('?', ''),
-          )
-
-          if (editedOptions) {
-            // Remove undefined keys
-            Object.keys(editedOptions.decorator).forEach(
-              (key) =>
-                editedOptions.decorator[key] === undefined &&
-                delete editedOptions.decorator[key],
-            )
-          }
-
-          if (
-            editedOptions &&
-            Object.keys(editedOptions?.decorator || {}).length > 0
-          ) {
-            const value = editedOptions.decorator
-
-            object = { ...object, ...value }
-          }
-
-          if (optionalCondition || isPrivate) {
-            object.nullable = true
-          } else {
-            object.nullable = undefined
-          }
-
-          // Remove undefined keys
-          Object.keys(object).forEach(
-            (key) => object[key] === undefined && delete object[key],
-          )
-
-          if (Object.keys(object).length === 0) {
-            return undefined
-          }
-
-          return objToString(object)
-        }
-
-        const Decorator = DECORATOR_TEMPLATE(decoratorType(), decoratorObject())
+        const Decorator = DECORATOR_TEMPLATE(decoratorType(), '')
         const Field = FIELD_TEMPLATE(Decorator, '\n  ' + fieldName, fieldType)
 
         return { field: Field, kind: field.kind }
@@ -257,10 +214,7 @@ generatorHandler({
 
       // Import TypeGraphQL Stuff
       imports.push(
-        IMPORT_TEMPLATE(
-          `{ Field, ObjectType${dynamicImports} }`,
-          `type-graphql`,
-        ),
+        IMPORT_TEMPLATE(`{ Field, ObjectType${dynamicImports} }`, `decapi`),
       )
 
       imports = [

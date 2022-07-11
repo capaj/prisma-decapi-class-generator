@@ -1,11 +1,12 @@
-import { Field, ObjectType, Int, Float } from 'type-graphql'
 import { Heart } from './Heart'
 import { User } from './User'
 import { Comment } from './Comment'
+import { Field, ObjectType } from 'decapi'
+import { Field, ObjectType, Int, Float } from 'decapi'
 
 @ObjectType()
 export class PostScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
@@ -14,29 +15,29 @@ export class PostScalars {
   @Field()
   body: string
 
-  @Field((_type) => [String])
+  @Field()
   tags: string[]
 
-  @Field((_type) => [Int])
+  @Field()
   test: number[]
 
   @Field()
   published: boolean
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   hearts_count: number
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   comments_count: number
 
   @Field()
   readingTimeTxt: string
 
-  @Field((_type) => Float)
+  @Field({ type: Float })
   readingTimeMin: number
 
-  @Field({ nullable: true })
-  coverImg?: string
+  @Field()
+  coverImg: string | null
 
   @Field()
   createdAt: Date
@@ -47,13 +48,13 @@ export class PostScalars {
 
 @ObjectType()
 export class Post extends PostScalars {
-  @Field((_type) => [Heart])
+  @Field()
   hearts: Heart[]
 
-  @Field((_type) => User)
+  @Field()
   author: User
 
-  @Field((_type) => [Comment])
+  @Field()
   comments: Comment[]
 
   // skip overwrite 👇

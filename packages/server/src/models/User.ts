@@ -1,40 +1,41 @@
-import { Field, ObjectType, Int } from 'type-graphql'
 import { Post } from './Post'
 import { Comment } from './Comment'
 import { Follower } from './Follower'
 import { Notification } from './Notification'
+import { Field, ObjectType } from 'decapi'
+import { Field, ObjectType, Int } from 'decapi'
 
 @ObjectType()
 export class UserScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
   name: string
 
-  @Field({ nullable: true })
-  username?: string
+  @Field()
+  username: string | null
 
-  @Field({ nullable: true })
+  @Field()
   email: string
 
-  @Field({ nullable: true })
-  bio?: string
+  @Field()
+  bio: string | null
 
-  @Field({ nullable: true })
-  profilePic?: string
+  @Field()
+  profilePic: string | null
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   followers_count: number
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   following_count: number
 
-  @Field({ nullable: true })
-  githubId?: string
+  @Field()
+  githubId: string | null
 
-  @Field({ nullable: true })
-  lastTimelineVisit?: Date
+  @Field()
+  lastTimelineVisit: Date | null
 
   @Field()
   createdAt: Date
@@ -45,19 +46,19 @@ export class UserScalars {
 
 @ObjectType()
 export class User extends UserScalars {
-  @Field((_type) => [Post])
+  @Field()
   posts: Post[]
 
-  @Field((_type) => [Comment])
+  @Field()
   comments: Comment[]
 
-  @Field((_type) => [Follower])
+  @Field()
   followers: Follower[]
 
-  @Field((_type) => [Follower])
+  @Field()
   following: Follower[]
 
-  @Field((_type) => [Notification])
+  @Field()
   notifications: Notification[]
 
   // skip overwrite 👇

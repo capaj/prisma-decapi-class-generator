@@ -2,20 +2,22 @@ import { Field, ObjectType, Int } from 'type-graphql'
 import { User } from './User'
 import { Post } from './Post'
 import { Heart } from './Heart'
+import { Field, ObjectType } from 'decapi'
+import { Field, ObjectType, Int } from 'decapi'
 
 @ObjectType()
 export class CommentScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
   text: string
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   hearts_count: number
 
-  @Field({ nullable: true })
-  parentId?: string
+  @Field()
+  parentId: string | null
 
   @Field()
   createdAt: Date
@@ -26,13 +28,13 @@ export class CommentScalars {
 
 @ObjectType()
 export class Comment extends CommentScalars {
-  @Field((_type) => User)
+  @Field()
   author: User
 
-  @Field((_type) => Post)
+  @Field()
   post: Post
 
-  @Field((_type) => [Heart])
+  @Field()
   hearts: Heart[]
 
   // skip overwrite 👇

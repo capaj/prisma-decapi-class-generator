@@ -1,11 +1,13 @@
-import { Field, ObjectType, Int } from 'type-graphql'
+
 import { User } from './User'
 import { NotificationFromUser } from './NotificationFromUser'
 import { NotificationType } from '../types/NotificationType'
 
+import { Field, ObjectType, Int } from 'decapi'
+
 @ObjectType()
 export class NotificationScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
   @Field()
@@ -14,7 +16,7 @@ export class NotificationScalars {
   @Field()
   message: string
 
-  @Field((_type) => NotificationType)
+  @Field()
   type: NotificationType
 
   @Field()
@@ -29,14 +31,11 @@ export class NotificationScalars {
 
 @ObjectType()
 export class Notification extends NotificationScalars {
-  @Field((_type) => User)
+  @Field()
   notifiedUser: User
 
-  @Field((_type) => [NotificationFromUser])
+  @Field()
   fromUsers: NotificationFromUser[]
-
-  @Field((_type) => NotificationType)
-  type: NotificationType
 
   // skip overwrite 👇
 }

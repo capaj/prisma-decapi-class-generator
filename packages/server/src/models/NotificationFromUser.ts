@@ -1,24 +1,26 @@
 import { Field, ObjectType, Int } from 'type-graphql'
 import { User } from './User'
+import { Field, ObjectType } from 'decapi'
+import { Field, ObjectType, Int } from 'decapi'
 
 @ObjectType()
 export class NotificationFromUserScalars {
-  @Field((_type) => Int)
+  @Field({ type: Int })
   id: number
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   userId: number
 
-  @Field((_type) => Int)
+  @Field({ type: Int })
   userWhoFiredId: number
 }
 
 @ObjectType()
 export class NotificationFromUser extends NotificationFromUserScalars {
-  @Field((_type) => User)
+  @Field()
   user: User
 
-  @Field((_type) => User)
+  @Field()
   userWhoFired: User
 
   // skip overwrite 👇
