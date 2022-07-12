@@ -229,7 +229,7 @@ generatorHandler({
           .map(({ kind, name }) => {
             if (!hidden.find((e: any) => e.type === name)) {
               if (kind === 'object') {
-                const importModelName = `${exportedNamePrefix}${name}${exportedNameSuffix}`
+                const importModelName = getModelName(name)
 
                 // If the Model referenced itself -> return
                 if (importModelName === modelName) {
