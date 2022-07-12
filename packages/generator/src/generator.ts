@@ -110,8 +110,7 @@ generatorHandler({
 
         const fieldType = `${convertType(
           field.type as string,
-          exportedNamePrefix,
-          exportedNameSuffix,
+          getModelName(field.type),
         )!}${field.isList ? '[]' : ''}${optionalCondition ? ' | null' : ''}`
 
         const decoratorType = () => {
@@ -150,8 +149,8 @@ generatorHandler({
             }
           }
 
-          const typeGraphQLType = getEquivalentType()
-          if (!typeGraphQLType) {
+          const decapiType = getEquivalentType()
+          if (!decapiType) {
             return ''
           }
 
@@ -162,18 +161,16 @@ generatorHandler({
           }
 
           if (
-            (typeGraphQLType as string).length === 0 ||
+            (decapiType as string).length === 0 ||
             (field.kind === 'scalar' &&
               !field.isId &&
               field.type !== 'Json' &&
-              !dynamicImports
-                .split(',')
-                .find((e) => e.trim() === typeGraphQLType))
+              !dynamicImports.split(',').find((e) => e.trim() === decapiType))
           ) {
             return ''
           }
 
-          return type(typeGraphQLType as string)
+          return type(decapiType as string)
         }
 
         const fieldName = field.name

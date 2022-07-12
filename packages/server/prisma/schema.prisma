@@ -33,14 +33,14 @@ model User {
   confirmed                     Boolean                @default(false)
   profilePic                    String?
   posts                         Post[]
-  comments                      Comment[]
+  comments                      comment[]
   // @skip
   hearts                        Heart[]
   followers_count               Int                    @default(0)
   following_count               Int                    @default(0)
   followers                     Follower[]
   following                     Follower[]             @relation("followerToUser")
-  notifications                 Notification[]
+  notifications                 notification[]
   // @skip
   notificationsFromUser         NotificationFromUser[]
   // @skip
@@ -76,7 +76,7 @@ model Post {
   // @skip
   authorId       Int
   author         User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  comments       Comment[]
+  comments       comment[]
   readingTimeTxt String
   readingTimeMin Float
   coverImg       String?
@@ -84,7 +84,7 @@ model Post {
   updatedAt      DateTime  @updatedAt
 }
 
-model Notification {
+model notification {
   id             Int                    @id @default(autoincrement())
   notifiedUser   User                   @relation(fields: [notifiedUserId], references: [id], onDelete: Cascade)
   // @skip
@@ -113,7 +113,7 @@ model NotificationFromUser {
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userWhoFired   User          @relation(fields: [userWhoFiredId], references: [id], onDelete: Cascade, name: "whoFired")
   // @skip
-  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  notification   notification? @relation(fields: [notificationId], references: [id], onDelete: Cascade)
   userId         Int
   userWhoFiredId Int
   // @skip
@@ -124,7 +124,7 @@ model Heart {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  comment   comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
   // @skip
   authorId  Int
   // @skip
@@ -135,7 +135,7 @@ model Heart {
   updatedAt DateTime @updatedAt
 }
 
-model Comment {
+model comment {
   id           Int      @id @default(autoincrement())
   text         String
   author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -149,4 +149,5 @@ model Comment {
   parentId     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
 }

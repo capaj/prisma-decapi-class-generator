@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { buildSchema } from 'type-graphql'
+import { buildSchema } from 'decapi'
 import path from 'path'
 import { ApolloServer } from 'apollo-server'
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'

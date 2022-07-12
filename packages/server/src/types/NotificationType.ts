@@ -1,4 +1,4 @@
-import { registerEnumType } from 'type-graphql'
+import { registerEnum } from 'decapi'
 
 export enum NotificationTypeGQL {
   newPosts = 'newPosts',
@@ -9,6 +9,6 @@ export enum NotificationTypeGQL {
   heartOnComment = 'heartOnComment',
   heartOnReply = 'heartOnReply',
 }
-registerEnumType(NotificationTypeGQL, {
+registerEnum(NotificationTypeGQL, {
   name: 'NotificationType',
 })

@@ -2,12 +2,12 @@ export const ENUM_TEMPLATE = (
   ENUM: string,
   ENUMVALUES: string,
   REGISTEREDNAME: string,
-) => `import { registerEnumType } from 'type-graphql'
+) => `import { registerEnum } from 'decapi'
 
 export enum ${ENUM} {
 ${ENUMVALUES}
 }
-registerEnumType(${ENUM}, {
+registerEnum(${ENUM}, {
     name: '${REGISTEREDNAME}',
 })
 `
