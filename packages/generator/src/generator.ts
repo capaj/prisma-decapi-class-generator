@@ -13,35 +13,18 @@ import { ExtractFieldsModifications } from './utils/extractFieldsModifications'
 import { HideOrPrivate } from './utils/hideOrPrivate'
 import { mkdir } from './utils/mkdir'
 import { modulesThatIsUsed } from './utils/modulesThatIsUsed'
-import { objToString } from './utils/objectToString'
-import { spawn } from 'child_process'
+
 import { ENUM_TEMPLATE } from './templates/enum'
 import { replaceAll } from './utils/replaceAll'
 import { restoreClassChanges } from './utils/restoreClassChanges'
 import { restoreImportsChanges } from './utils/restoreImportsSection'
 import { restoreDecoratorObjects } from './utils/restoreDecoratorObjects'
-import prettier from 'prettier'
+
 import { format } from './utils/format'
 import { toPascalCase } from './utils/toPascalCase'
 
 const defaultModelsOutput = path.join(process.cwd(), './src/generated/models')
 const defaultEnumsOutput = path.join(process.cwd(), './src/generated/enums')
-
-const installPackage = (useYarn: string, pkgName: string) => {
-  const packageManager = useYarn ? 'yarn add' : 'npm i'
-
-  const hasGraphQLScalars = fs
-    .readFileSync(path.join(process.cwd(), './package.json'), 'utf-8')
-    .includes(`"${pkgName}"`)
-
-  if (hasGraphQLScalars) return
-
-  logger.info(`${GENERATOR_NAME}:Installing ${pkgName}`)
-  spawn(`${packageManager} ${pkgName}`, [], {
-    shell: true,
-    stdio: 'inherit',
-  })
-}
 
 generatorHandler({
   onManifest: () => ({
@@ -87,15 +70,6 @@ generatorHandler({
         allFields.push({ field: fieldName, type: fieldType })
       })
 
-      const decoratorObjects = restoreDecoratorObjects(
-        writeLocation,
-        allFields.map((e) => ({
-          field: e.field.replace('?', ''),
-          type: e.type,
-        })),
-        modelName,
-      )
-
       let dynamicImports = ''
 
       const formattedFields = model.fields.map((field) => {
@@ -116,11 +90,6 @@ generatorHandler({
         const decoratorType = () => {
           // Special Cases
           const type = (type: string) => `{ type: ${type} }`
-
-          const modifiedFieldType =
-            field.kind === 'scalar'
-              ? field.type
-              : `${exportedNamePrefix}${field.type}${exportedNameSuffix}`
 
           const addDynamicImports = (exported: string) => {
             if (dynamicImports.split(',').find((e) => e.trim() === exported)) {
@@ -265,7 +234,7 @@ generatorHandler({
 
       // Install needed Packages
       if (scalarFields.join('\n').includes('GraphQLScalars.')) {
-        installPackage(options.generator.config.useYarn, 'graphql-scalars')
+        // installPackage(options.generator.config.useYarn, 'graphql-scalars')
         imports.push(IMPORT_TEMPLATE(`GraphQLScalars`, `graphql-scalars`))
       }
 
