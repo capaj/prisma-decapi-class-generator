@@ -1,11 +1,11 @@
 {
   "name": "prisma-decapi-class-generator",
   "description": "Prisma generator for generating Decapi class types and enums",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "dist/generator.js",
   "license": "MIT",
   "bin": {
-    "prisma-typegraphql-types-generator": "dist/bin.js"
+    "prisma-decapi-class-generator": "dist/bin.js"
   },
   "engines": {
     "node": ">=14.0"
@@ -15,6 +15,7 @@
     "build": "tsc",
     "prepack": "yarn build",
     "test": "jest",
+    "prepublishOnly": "yarn build",
     "publish-locally": "yalc push",
     "semantic-release": "semantic-release"
   },
@@ -38,10 +39,10 @@
     "semantic-release": "^19.0.3",
     "typescript": "^4.7.4"
   },
-  "homepage": "https://github.com/YassinEldeeb/Prisma-TypeGraphQL-Types-Generator",
+  "homepage": "https://github.com/capaj/prisma-decapi-class-generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YassinEldeeb/prisma-tgql-types-gen.git"
+    "url": "https://github.com/capaj/prisma-decapi-class-generator.git"
   },
   "contributors": [
     "Yassin Eldeeb <yassineldeeb94@gmail.com>",
@@ -50,8 +51,7 @@
   "keywords": [
     "prisma",
     "prisma2",
-    "type-graphql",
-    "typegraphql",
+    "decapi",
     "prisma-framework",
     "graphql",
     "generator",

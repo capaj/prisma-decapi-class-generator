@@ -30,7 +30,7 @@ Define Generator in `schema.prisma` and **that's it**
 
 ```prisma
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-Decapi-types-generator"
+  provider     = "npx prisma-decapi-class-generator"
   modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
   enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
   useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
@@ -49,7 +49,7 @@ generator client {
 }
 
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-decapi-types-generator"
+  provider     = "npx prisma-decapi-class-generator"
   modelsOutput = "./src/models"
   enumsOutput  = "./src/types/enums"
   useYarn      = true

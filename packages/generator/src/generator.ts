@@ -54,6 +54,8 @@ generatorHandler({
     const splitScalars =
       !!options.generator.config.splitScalarAndObjectTypeFields
 
+    const pascalCaseModelNames = !!options.generator.config.pascalCaseModelNames
+
     const exportedNameSuffix = options.generator.config.exportedNameSuffix || ''
     const exportedNamePrefix = options.generator.config.exportedNamePrefix || ''
 
@@ -79,7 +81,9 @@ generatorHandler({
         allFields.push({ field: fieldName, type: fieldType })
       })
 
-      const modelName = `${exportedNamePrefix}${model.name}${exportedNameSuffix}`
+      const modelName = `${exportedNamePrefix}${
+        pascalCaseModelNames ? toPascalCase(model.name) : model.name
+      }${exportedNameSuffix}`
 
       const decoratorObjects = restoreDecoratorObjects(
         writeLocation,

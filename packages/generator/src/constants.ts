@@ -1,1 +1,1 @@
-export const GENERATOR_NAME = 'Prisma Typegraphql Types Generator'
+export const GENERATOR_NAME = 'Prisma Decapi Class Generator'

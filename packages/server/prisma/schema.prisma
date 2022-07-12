@@ -3,11 +3,12 @@ generator client {
 }
 
 generator PrismaTypeGraphQLTypesGenerator {
-  provider                       = "node ../../node_modules/prisma-typegraphql-types-generator"
+  provider                       = "node ../../node_modules/prisma-decapi-class-generator"
   modelsOutput                   = "./src/models"
   enumsOutput                    = "./src/types"
   useYarn                        = true
   splitScalarAndObjectTypeFields = true
+  pascalCaseModelNames           = true
 }
 
 datasource db {
