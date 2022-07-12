@@ -1,10 +1,10 @@
 import { DMMF } from '@prisma/generator-helper'
-import { removeDublicates } from './removeDublicates'
+import { removeDuplicates } from './removeDuplicates'
 
 // Check if they're // @hide or not
 export const modulesThatIsUsed = (
   dataModel: DMMF.Model[],
-  modelName: string
+  modelName: string,
 ) => {
   const model = dataModel.find((e) => e.name === modelName)!
 
@@ -14,5 +14,5 @@ export const modulesThatIsUsed = (
     })
     .map((e) => ({ name: e.type, kind: e.kind }))
 
-  return removeDublicates(used, 'name')
+  return removeDuplicates(used, 'name')
 }

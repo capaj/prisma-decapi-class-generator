@@ -1,8 +1,8 @@
-import { User } from './User'
 import { Field, ObjectType, Int } from 'decapi'
+import { UserGQL } from './UserGQL'
 
 @ObjectType()
-export class FollowerScalars {
+export class FollowerGQLScalars {
   @Field({ type: Int })
   id: number
 
@@ -14,12 +14,12 @@ export class FollowerScalars {
 }
 
 @ObjectType()
-export class Follower extends FollowerScalars {
+export class FollowerGQL extends FollowerGQLScalars {
   @Field()
-  followed_user: User
+  followed_user: UserGQL
 
   @Field()
-  follower_user: User
+  follower_user: UserGQL
 
   // skip overwrite 👇
 }

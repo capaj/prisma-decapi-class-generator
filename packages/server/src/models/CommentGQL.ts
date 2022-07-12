@@ -1,12 +1,10 @@
-import { Field, ObjectType, Int } from 'type-graphql'
-import { User } from './User'
-import { Post } from './Post'
-import { Heart } from './Heart'
-import { Field, ObjectType } from 'decapi'
 import { Field, ObjectType, Int } from 'decapi'
+import { UserGQL } from './UserGQL'
+import { PostGQL } from './PostGQL'
+import { HeartGQL } from './HeartGQL'
 
 @ObjectType()
-export class CommentScalars {
+export class CommentGQLScalars {
   @Field({ type: Int })
   id: number
 
@@ -27,15 +25,15 @@ export class CommentScalars {
 }
 
 @ObjectType()
-export class Comment extends CommentScalars {
+export class CommentGQL extends CommentGQLScalars {
   @Field()
-  author: User
+  author: UserGQL
 
   @Field()
-  post: Post
+  post: PostGQL
 
   @Field()
-  hearts: Heart[]
+  hearts: HeartGQL[]
 
   // skip overwrite 👇
 }

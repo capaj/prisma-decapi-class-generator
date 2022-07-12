@@ -1,12 +1,11 @@
-import { Post } from './Post'
-import { Comment } from './Comment'
-import { Follower } from './Follower'
-import { Notification } from './Notification'
-import { Field, ObjectType } from 'decapi'
 import { Field, ObjectType, Int } from 'decapi'
+import { PostGQL } from './PostGQL'
+import { CommentGQL } from './CommentGQL'
+import { FollowerGQL } from './FollowerGQL'
+import { NotificationGQL } from './NotificationGQL'
 
 @ObjectType()
-export class UserScalars {
+export class UserGQLScalars {
   @Field({ type: Int })
   id: number
 
@@ -45,21 +44,21 @@ export class UserScalars {
 }
 
 @ObjectType()
-export class User extends UserScalars {
+export class UserGQL extends UserGQLScalars {
   @Field()
-  posts: Post[]
+  posts: PostGQL[]
 
   @Field()
-  comments: Comment[]
+  comments: CommentGQL[]
 
   @Field()
-  followers: Follower[]
+  followers: FollowerGQL[]
 
   @Field()
-  following: Follower[]
+  following: FollowerGQL[]
 
   @Field()
-  notifications: Notification[]
+  notifications: NotificationGQL[]
 
   // skip overwrite 👇
 }

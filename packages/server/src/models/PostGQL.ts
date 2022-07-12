@@ -1,11 +1,10 @@
-import { Heart } from './Heart'
-import { User } from './User'
-import { Comment } from './Comment'
-import { Field, ObjectType } from 'decapi'
 import { Field, ObjectType, Int, Float } from 'decapi'
+import { HeartGQL } from './HeartGQL'
+import { UserGQL } from './UserGQL'
+import { CommentGQL } from './CommentGQL'
 
 @ObjectType()
-export class PostScalars {
+export class PostGQLScalars {
   @Field({ type: Int })
   id: number
 
@@ -47,15 +46,15 @@ export class PostScalars {
 }
 
 @ObjectType()
-export class Post extends PostScalars {
+export class PostGQL extends PostGQLScalars {
   @Field()
-  hearts: Heart[]
+  hearts: HeartGQL[]
 
   @Field()
-  author: User
+  author: UserGQL
 
   @Field()
-  comments: Comment[]
+  comments: CommentGQL[]
 
   // skip overwrite 👇
 }

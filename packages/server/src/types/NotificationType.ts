@@ -1,6 +1,6 @@
 import { registerEnumType } from 'type-graphql'
 
-export enum NotificationType {
+export enum NotificationTypeGQL {
   newPosts = 'newPosts',
   newComments = 'newComments',
   newFollowers = 'newFollowers',
@@ -9,6 +9,6 @@ export enum NotificationType {
   heartOnComment = 'heartOnComment',
   heartOnReply = 'heartOnReply',
 }
-registerEnumType(NotificationType, {
+registerEnumType(NotificationTypeGQL, {
   name: 'NotificationType',
 })

@@ -22,6 +22,7 @@ import { restoreImportsChanges } from './utils/restoreImportsSection'
 import { restoreDecoratorObjects } from './utils/restoreDecoratorObjects'
 import prettier from 'prettier'
 import { format } from './utils/format'
+import { toPascalCase } from './utils/toPascalCase'
 
 const defaultModelsOutput = path.join(process.cwd(), './src/generated/models')
 const defaultEnumsOutput = path.join(process.cwd(), './src/generated/enums')
@@ -66,7 +67,12 @@ generatorHandler({
 
     // ?Models
     options.dmmf.datamodel.models.map(async (model) => {
-      const fileName = model.name + '.ts'
+      const getModelName = (name: string) =>
+        `${exportedNamePrefix}${
+          pascalCaseModelNames ? toPascalCase(name) : name
+        }${exportedNameSuffix}`
+      const modelName = getModelName(model.name)
+      const fileName = modelName + '.ts'
 
       const writeLocation = path.join(modelsWriteLocation, fileName)
 
@@ -80,10 +86,6 @@ generatorHandler({
         }`
         allFields.push({ field: fieldName, type: fieldType })
       })
-
-      const modelName = `${exportedNamePrefix}${
-        pascalCaseModelNames ? toPascalCase(model.name) : model.name
-      }${exportedNameSuffix}`
 
       const decoratorObjects = restoreDecoratorObjects(
         writeLocation,
@@ -234,7 +236,10 @@ generatorHandler({
                   return
                 }
 
-                return IMPORT_TEMPLATE(`{ ${importModelName} }`, `./${name}`)
+                return IMPORT_TEMPLATE(
+                  `{ ${importModelName} }`,
+                  `./${getModelName(name)}`,
+                )
               } else if (kind === 'enum') {
                 const relativePathToEnums = replaceAll(
                   path.relative(
@@ -358,6 +363,7 @@ generatorHandler({
       mkdir(writeLocation, fileName)
 
       fs.writeFileSync(writeLocation, await format(generatedModel))
+      console.log(`Generated ${writeLocation}`)
     })
 
     // ?Enums

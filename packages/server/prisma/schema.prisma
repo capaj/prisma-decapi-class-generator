@@ -9,6 +9,8 @@ generator PrismaTypeGraphQLTypesGenerator {
   useYarn                        = true
   splitScalarAndObjectTypeFields = true
   pascalCaseModelNames           = true
+  exportedNameSuffix             = "GQL"
+
 }
 
 datasource db {

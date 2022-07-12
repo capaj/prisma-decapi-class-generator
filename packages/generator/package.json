@@ -1,7 +1,7 @@
 {
   "name": "prisma-decapi-class-generator",
   "description": "Prisma generator for generating Decapi class types and enums",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/generator.js",
   "license": "MIT",
   "bin": {
@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "@prisma/generator-helper": "^4.0.0",
-    "chalk": "^4"
+    "chalk": "^4",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "prettier": "^2"
@@ -32,6 +33,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.3",
     "@types/prettier": "^2.6.3",
     "jest": "^28.1.2",
