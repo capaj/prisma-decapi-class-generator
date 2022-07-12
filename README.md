@@ -1,6 +1,6 @@
-# Prisma TypeGraphQL Types Generator
+# Prisma Decapi Types Generator
 
-![Banner](https://github.com/YassinEldeeb/Prisma-TypeGraphQL-Types-Generator/blob/main/images/Banner.png)
+![Banner](https://github.com/YassinEldeeb/Prisma-Decapi-Types-Generator/blob/main/images/Banner.png)
 
 ## Prisma
 
@@ -9,16 +9,11 @@
 Prisma basically generate each model type definition defined in [`schema.prisma`](https://www.prisma.io/docs/concepts/components/prisma-schema).
 Therefore, it's different from other ORMs so It does not require any additional entry classes or repository layers to model your data.
 
-However, there are limitations to prisma solution, if you're building GraphQL APIs with TypegraphQL and Prisma you've to write the same types as classes and enums in TypeGraphQL and maintain both of Prisma definitions and TypegraphQL classes and enums to be synced as you edit them and that's not very cool in my opinion.
-
-So I created a Prisma generator to help us with generating all of the TypegraphQL models and enums by introspecting the type definitions in `prisma.schema` file and do all of the work for you, so you don't have to constantly go back and forth between your TypegraphQL class types and `prisma.schema` file when you decide to make changes.
-
-## How this differs from [`typegraphql-prisma`](https://github.com/MichalLytek/typegraphql-prisma) by the legend himself @MichalLytek?
+However, there are limitations to prisma solution, if you're building GraphQL APIs with Decapi and Prisma you've to write the same types as classes and enums in Decapi and maintain both of Prisma definitions and Decapi classes and enums to be synced as you edit them and that's not very cool in my opinion.
 
 ### Features
 
-- Doesn't generate CRUD resolvers as [`typegraphql-prisma`](https://github.com/MichalLytek/typegraphql-prisma) does.
-- Generates TypegraphQL class types and enums from your `prisma.schema` file.
+- Generates Decapi class types and enums from your `prisma.schema` file.
 - It searches for a prettier config starting from your working directory and if it was found, It uses it for formatting the generated output.
 - The Generated output is very human readable and doesn't look like generated code what so ever.
 - The Generated output can be edited so you can edit the generated output and the next generation won't overwrite your changes but sustain them.
@@ -35,7 +30,7 @@ Define Generator in `schema.prisma` and **that's it**
 
 ```prisma
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-typegraphql-types-generator"
+  provider     = "npx prisma-Decapi-types-generator"
   modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
   enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
   useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
@@ -54,7 +49,7 @@ generator client {
 }
 
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-typegraphql-types-generator"
+  provider     = "npx prisma-decapi-types-generator"
   modelsOutput = "./src/models"
   enumsOutput  = "./src/types/enums"
   useYarn      = true
@@ -106,12 +101,12 @@ The generated output will be like this 😎
 
 ```typescript
 // src/models/User.ts
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType } from 'decapi'
 import { Post } from './Post'
 
 @ObjectType()
 export class User {
-  @Field((_type) => ID)
+  @Field({ type: ID })
   id: string
 
   @Field()
@@ -147,13 +142,13 @@ export class User {
 
 ```typescript
 // src/models/Post.ts
-import { Field, ID, ObjectType, Float } from 'type-graphql'
+import { Field, ID, ObjectType, Float } from 'decapi'
 import { User } from './User'
 import { Language } from '../src/types/enums/Language'
 
 @ObjectType()
 export class Post {
-  @Field((_type) => ID)
+  @Field({ type: ID })
   id: string
 
   @Field()
@@ -195,7 +190,7 @@ export class Post {
 
 ```typescript
 // src/types/enums/Language.ts
-import { registerEnumType } from 'type-graphql'
+import { registerEnumType } from 'decapi'
 
 export enum Language {
   Typescript = 'Typescript',
@@ -229,7 +224,7 @@ You've probably noticed the `// skip overwrite 👇` comment at the very bottom 
 
 ```diff
 // src/models/User.ts
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType } from 'decapi'
 import { Post } from './Post'
 + import { addTwoNumbers } from '../utils/sillyStuff'
 +
@@ -237,7 +232,7 @@ import { Post } from './Post'
 +
 @ObjectType()
 export class User {
-  @Field((_type) => ID)
+  @Field()
   id: string
   ...
 ```
@@ -274,6 +269,7 @@ export class User {
 ```
 
 4- after the class
+
 ```diff
 // src/models/User.ts
 @ObjectType()
@@ -293,11 +289,12 @@ export class User {
 ```
 
 ## Real World Example
+
 [Blogs/Podcasts-Platform](https://github.com/YassinEldeeb/Blogs-Podcasts-Platform/tree/master/packages/server)
 
 ## Known Issues
 
-Basically the only times you'll see the TypeGraphQL file introspecter fails is caused by the leaky implementation I did to grab the object from the field decorator.
+Basically the only times you'll see the Decapi file introspecter fails is caused by the leaky implementation I did to grab the object from the field decorator.
 
 1- Can't use the object shorthand syntax in the field config object.
 
@@ -309,7 +306,7 @@ import { complexity } from '../shared/complexity'
 
 @ObjectType()
 export class User {
-+ @Field((_type) => ID, { complexity })
++ @Field(, { complexity })
   id: string
   ...
 }
@@ -325,11 +322,12 @@ import { complexity } from '../shared/complexity'
 
 @ObjectType()
 export class User {
-+ @Field((_type) => ID, { name: ",", complexity: 1 })
++ @Field(, { name: ",", complexity: 1 })
   id: string
   ...
 }
 ```
+
 Will work 👇
 
 ```diff
@@ -340,13 +338,14 @@ const IDFieldName = ","
 
 @ObjectType()
 export class User {
-+ @Field((_type) => ID, { name: IDFieldName, complexity: 1 })
++ @Field(, { name: IDFieldName, complexity: 1 })
   id: string
   ...
 }
 ```
 
 # Contributing
+
 We'll be very thankful for all your contributions, whether it's for helping us find issues in our code, highlighting features that're missing, writing tests for uncovered cases, or contributing to the codebase.
 
 Read the [Contributing guide](https://github.com/YassinEldeeb/prisma-tgql-types-gen/blob/main/CONTRIBUTING.md) to get started.
