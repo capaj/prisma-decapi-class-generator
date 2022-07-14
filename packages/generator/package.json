@@ -1,7 +1,7 @@
 {
   "name": "prisma-decapi-class-generator",
   "description": "Prisma generator for generating Decapi class types and enums",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/generator.js",
   "license": "MIT",
   "bin": {
