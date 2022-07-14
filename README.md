@@ -24,6 +24,14 @@ However, there are limitations to prisma solution, if you're building GraphQL AP
 - option to use `yarn` for installing [`graphql-scalars`](https://github.com/Urigo/graphql-scalars) (default is npm).
 - add prefix or suffix to exported class names and enums.
 
+## Install
+
+```
+yarn add prisma-decapi-class-generator graphql-scalars prisma-graphql-type-decimal
+npm i prisma-decapi-class-generator graphql-scalars prisma-graphql-type-decimal
+pnpm add prisma-decapi-class-generator graphql-scalars prisma-graphql-type-decimal
+```
+
 ## Usage
 
 Define Generator in `schema.prisma` and **that's it**

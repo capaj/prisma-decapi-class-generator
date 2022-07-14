@@ -144,6 +144,8 @@ model comment {
   authorId     Int
   // @skip
   postId       Int
+  longitude    Decimal?
+  latitude     Decimal?
   hearts       Heart[]
   hearts_count Int      @default(0)
   parentId     String?

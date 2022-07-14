@@ -5093,6 +5093,11 @@ prisma-decapi-class-generator@0.1.1:
     "@prisma/generator-helper" "^4.0.0"
     chalk "^4"
 
+prisma-graphql-type-decimal@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/prisma-graphql-type-decimal/-/prisma-graphql-type-decimal-2.0.4.tgz#be33afd57b234b55bce438fe736c894365bc2aea"
+  integrity sha512-HjqDYqpBF8T6XztkYVemcEit+XywoygQPUvM7Cowvd9ExkUz8ofZaTlIkY0Rw7kVOdz4btZhMsj/v/6Bitnn0w==
+
 prisma@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.0.0.tgz#4ddb8fcd4f64d33aff8c198a6986dcce66dc8152"

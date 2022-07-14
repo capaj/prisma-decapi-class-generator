@@ -8,6 +8,7 @@ export const prismaTypes = [
   'Decimal',
   'Json',
   'Bytes',
+  'Decimal',
 ]
 
 export const convertType = (type: string, modelName?: string) => {
@@ -21,8 +22,6 @@ export const convertType = (type: string, modelName?: string) => {
         return 'number'
       case 'BigInt':
         return 'number'
-      case 'Decimal':
-        return 'number'
       case 'Float':
         return 'number'
       case 'DateTime':
@@ -31,6 +30,8 @@ export const convertType = (type: string, modelName?: string) => {
         return 'Prisma.JsonValue'
       case 'Bytes':
         return 'Buffer'
+      case 'Decimal':
+        return 'Prisma.Decimal'
     }
   } else {
     return modelName

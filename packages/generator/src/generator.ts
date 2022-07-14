@@ -59,17 +59,6 @@ generatorHandler({
 
       const writeLocation = path.join(modelsWriteLocation, fileName)
 
-      const allFields: { field: string; type: string }[] = []
-
-      model.fields.map((field) => {
-        const optionalCondition = !field.isRequired
-        const fieldName = `${field.name}${optionalCondition ? '?' : ''}`
-        const fieldType = `${convertType(field.type as string)!}${
-          field.isList ? '[]' : ''
-        }`
-        allFields.push({ field: fieldName, type: fieldType })
-      })
-
       let dynamicImports = ''
 
       const formattedFields = model.fields.map((field) => {
@@ -97,7 +86,7 @@ generatorHandler({
             }
             dynamicImports += `, ${exported}`
           }
-          const getEquivalentType = () => {
+          const getEquivalentGraphqlScalar = () => {
             const convertedType = convertType(field.type as string)
 
             if (field.isId && field.type !== 'Int') {
@@ -111,6 +100,8 @@ generatorHandler({
               return 'Float'
             } else if (convertedType === 'Prisma.JsonValue') {
               return 'GraphQLScalars.JSONResolver'
+            } else if (convertedType === 'Prisma.Decimal') {
+              return 'GraphQLDecimal'
             } else if (convertedType === 'Buffer') {
               return 'GraphQLScalars.ByteResolver'
             } else {
@@ -118,8 +109,17 @@ generatorHandler({
             }
           }
 
-          const decapiType = getEquivalentType()
-          if (!decapiType) {
+          const graphqlScalar = getEquivalentGraphqlScalar()
+          if (field.type === 'Decimal') {
+            console.log(
+              '~ graphqlScalar',
+              graphqlScalar,
+              field,
+              convertType(field.type),
+            )
+          }
+
+          if (!graphqlScalar) {
             return ''
           }
 
@@ -129,17 +129,19 @@ generatorHandler({
             return ''
           }
 
-          if (
-            (decapiType as string).length === 0 ||
-            (field.kind === 'scalar' &&
-              !field.isId &&
-              field.type !== 'Json' &&
-              !dynamicImports.split(',').find((e) => e.trim() === decapiType))
-          ) {
-            return ''
-          }
+          // if (
+          //   (graphqlScalar as string).length === 0 ||
+          //   (field.kind === 'scalar' &&
+          //     !field.isId &&
+          //     field.type !== 'Json' &&
+          //     !dynamicImports
+          //       .split(',')
+          //       .find((e) => e.trim() === graphqlScalar))
+          // ) {
+          //   return ''
+          // }
 
-          return type(decapiType as string)
+          return type(graphqlScalar as string)
         }
 
         const fieldName = field.name
@@ -232,10 +234,17 @@ generatorHandler({
         imports.push(IMPORT_TEMPLATE(`{ Prisma }`, `@prisma/client`))
       }
 
+      const joinedFields = scalarFields.join('\n')
       // Install needed Packages
-      if (scalarFields.join('\n').includes('GraphQLScalars.')) {
+      if (joinedFields.includes('GraphQLScalars.')) {
         // installPackage(options.generator.config.useYarn, 'graphql-scalars')
-        imports.push(IMPORT_TEMPLATE(`GraphQLScalars`, `graphql-scalars`))
+        imports.push(IMPORT_TEMPLATE(`* as GraphQLScalars`, `graphql-scalars`))
+      }
+      if (joinedFields.includes('GraphQLDecimal')) {
+        // installPackage(options.generator.config.useYarn, 'graphql-scalars')
+        imports.push(
+          IMPORT_TEMPLATE(`{ GraphQLDecimal }`, `prisma-graphql-type-decimal`),
+        )
       }
 
       const classChanges = restoreClassChanges(writeLocation)
