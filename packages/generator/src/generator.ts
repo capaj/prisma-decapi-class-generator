@@ -110,14 +110,6 @@ generatorHandler({
           }
 
           const graphqlScalar = getEquivalentGraphqlScalar()
-          if (field.type === 'Decimal') {
-            console.log(
-              '~ graphqlScalar',
-              graphqlScalar,
-              field,
-              convertType(field.type),
-            )
-          }
 
           if (!graphqlScalar) {
             return ''
@@ -128,18 +120,6 @@ generatorHandler({
           } else if (field.kind === 'object' && !field.isList) {
             return ''
           }
-
-          // if (
-          //   (graphqlScalar as string).length === 0 ||
-          //   (field.kind === 'scalar' &&
-          //     !field.isId &&
-          //     field.type !== 'Json' &&
-          //     !dynamicImports
-          //       .split(',')
-          //       .find((e) => e.trim() === graphqlScalar))
-          // ) {
-          //   return ''
-          // }
 
           return type(graphqlScalar as string)
         }
