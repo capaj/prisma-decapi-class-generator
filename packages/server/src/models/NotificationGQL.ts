@@ -14,7 +14,7 @@ export class NotificationGQLScalars {
   @Field()
   message: string
 
-  @Field()
+  @Field({ type: NotificationTypeGQL })
   type: NotificationTypeGQL
 
   @Field()

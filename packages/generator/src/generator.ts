@@ -104,6 +104,9 @@ generatorHandler({
               return 'GraphQLDecimal'
             } else if (convertedType === 'Buffer') {
               return 'GraphQLScalars.ByteResolver'
+            } else if (field.kind === 'enum') {
+              // TODO we may remove this in the future, when https://github.com/typescript-rtti/typescript-rtti/issues/57 gets fixed
+              return getModelName(field.type)
             } else {
               return null
             }

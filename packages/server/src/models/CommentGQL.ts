@@ -3,7 +3,6 @@ import { UserGQL } from './UserGQL'
 import { PostGQL } from './PostGQL'
 import { HeartGQL } from './HeartGQL'
 import { Prisma } from '@prisma/client'
-
 import { GraphQLDecimal } from 'prisma-graphql-type-decimal'
 
 @ObjectType()
