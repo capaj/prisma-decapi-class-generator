@@ -35,12 +35,13 @@ Define Generator in `schema.prisma` and **that's it**
 
 ```prisma
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-typegraphql-types-generator"
+  provider     = "@capaj/prisma-typegraphql-types-generator"
   modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
   enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
   useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
   exportedNameSuffix = "GQL" // Optional if you want to add a suffix to the end of your exported class names and enums
   exportedNamePrefix = "TYPE" // Optional if you want to prefix your exported class names and enums
+  pascalCaseModelNames = false // Optional if you want to rename models to pascal case convention
 }
 ```
 
@@ -54,7 +55,7 @@ generator client {
 }
 
 generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "npx prisma-typegraphql-types-generator"
+  provider     = "@capaj/prisma-typegraphql-types-generator"
   modelsOutput = "./src/models"
   enumsOutput  = "./src/types/enums"
   useYarn      = true
@@ -274,6 +275,7 @@ export class User {
 ```
 
 4- after the class
+
 ```diff
 // src/models/User.ts
 @ObjectType()
@@ -293,6 +295,7 @@ export class User {
 ```
 
 ## Real World Example
+
 [Blogs/Podcasts-Platform](https://github.com/YassinEldeeb/Blogs-Podcasts-Platform/tree/master/packages/server)
 
 ## Known Issues
@@ -330,6 +333,7 @@ export class User {
   ...
 }
 ```
+
 Will work 👇
 
 ```diff
@@ -347,6 +351,7 @@ export class User {
 ```
 
 # Contributing
+
 We'll be very thankful for all your contributions, whether it's for helping us find issues in our code, highlighting features that're missing, writing tests for uncovered cases, or contributing to the codebase.
 
 Read the [Contributing guide](https://github.com/YassinEldeeb/prisma-tgql-types-gen/blob/main/CONTRIBUTING.md) to get started.
