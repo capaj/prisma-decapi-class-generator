@@ -21,6 +21,7 @@ import { restoreClassChanges } from './utils/restoreClassChanges'
 import { restoreImportsChanges } from './utils/restoreImportsSection'
 import { restoreDecoratorObjects } from './utils/restoreDecoratorObjects'
 import { format } from './utils/format'
+import { toPascalCase } from './utils/toPascalCase'
 
 const defaultModelsOutput = path.join(process.cwd(), './src/generated/models')
 const defaultEnumsOutput = path.join(process.cwd(), './src/generated/enums')
@@ -54,18 +55,23 @@ generatorHandler({
 
     const splitScalars =
       !!options.generator.config.splitScalarAndObjectTypeFields
-
-    const exportedNameSuffix = options.generator.config.exportedNameSuffix || ''
-    const exportedNamePrefix = options.generator.config.exportedNamePrefix || ''
+    const { config } = options.generator
+    const exportedNameSuffix = config.exportedNameSuffix || ''
+    const exportedNamePrefix = config.exportedNamePrefix || ''
+    const pascalCaseModelNames = !!config.pascalCaseModelNames
 
     const modelsWriteLocation =
-      options.generator.config.modelsOutput || defaultModelsOutput
+      config.modelsOutput || defaultModelsOutput
     const enumWriteLocation =
-      options.generator.config.enumsOutput || defaultEnumsOutput
+      config.enumsOutput || defaultEnumsOutput
 
     // ?Models
     options.dmmf.datamodel.models.map(async (model) => {
-      const fileName = model.name + '.ts'
+      const modelName = `${exportedNamePrefix}${
+        pascalCaseModelNames ? toPascalCase(model.name) : model.name
+        }${exportedNameSuffix}`
+      
+      const fileName = modelName + '.ts'
 
       const writeLocation = path.join(modelsWriteLocation, fileName)
 
@@ -79,8 +85,6 @@ generatorHandler({
         }`
         allFields.push({ field: fieldName, type: fieldType })
       })
-
-      const modelName = `${exportedNamePrefix}${model.name}${exportedNameSuffix}`
 
       const decoratorObjects = restoreDecoratorObjects(
         writeLocation,
