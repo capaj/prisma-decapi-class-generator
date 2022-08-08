@@ -111,7 +111,6 @@ generatorHandler({
         const fieldType = `${
           tsScalarType ? tsScalarType : getModelName(field.type)
         }${field.isList ? '[]' : ''}${field.isRequired ? '' : ' | null'}`
-        console.log('~ fieldType', fieldType)
 
         const decoratorType = () => {
           // Special Cases
