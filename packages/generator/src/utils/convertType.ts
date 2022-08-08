@@ -21,8 +21,6 @@ export const convertType = (type: string) => {
         return 'number'
       case 'BigInt':
         return 'number'
-      case 'Decimal':
-        return 'number'
       case 'Float':
         return 'number'
       case 'DateTime':

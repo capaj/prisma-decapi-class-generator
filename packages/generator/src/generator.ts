@@ -320,12 +320,12 @@ generatorHandler({
       // Install needed Packages
       if (scalarsJoined.includes('GraphQLScalars.')) {
         installPackage(options.generator.config.useYarn, 'graphql-scalars')
-        imports.push(IMPORT_TEMPLATE(`GraphQLScalars`, `graphql-scalars`))
+        imports.push(IMPORT_TEMPLATE(`* as GraphQLScalars`, `graphql-scalars`))
       }
 
       if (scalarsJoined.includes('GraphQLDecimal')) {
         imports.push(
-          IMPORT_TEMPLATE(`GraphQLDecimal`, 'prisma-graphql-type-decimal'),
+          IMPORT_TEMPLATE(`{ GraphQLDecimal }`, 'prisma-graphql-type-decimal'),
         )
       }
 
