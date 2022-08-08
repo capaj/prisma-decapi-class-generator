@@ -10,7 +10,7 @@ export const prismaTypes = [
   'Bytes',
 ]
 
-export const convertType = (type: string, prefix?: string, suffix?: string) => {
+export const convertType = (type: string) => {
   if (prismaTypes.includes(type)) {
     switch (type) {
       case 'String':
@@ -29,10 +29,10 @@ export const convertType = (type: string, prefix?: string, suffix?: string) => {
         return 'Date'
       case 'Json':
         return 'Prisma.JsonValue'
+      case 'Decimal':
+        return 'Prisma.Decimal'
       case 'Bytes':
         return 'Buffer'
     }
-  } else {
-    return `${prefix || ''}${type}${suffix || ''}`
   }
 }

@@ -60,17 +60,16 @@ generatorHandler({
     const exportedNamePrefix = config.exportedNamePrefix || ''
     const pascalCaseModelNames = !!config.pascalCaseModelNames
 
-    const modelsWriteLocation =
-      config.modelsOutput || defaultModelsOutput
-    const enumWriteLocation =
-      config.enumsOutput || defaultEnumsOutput
+    const modelsWriteLocation = config.modelsOutput || defaultModelsOutput
+    const enumWriteLocation = config.enumsOutput || defaultEnumsOutput
 
     // ?Models
     options.dmmf.datamodel.models.map(async (model) => {
-      const modelName = `${exportedNamePrefix}${
-        pascalCaseModelNames ? toPascalCase(model.name) : model.name
+      const getModelName = (name: string) =>
+        `${exportedNamePrefix}${
+          pascalCaseModelNames ? toPascalCase(name) : name
         }${exportedNameSuffix}`
-      
+      const modelName = getModelName(model.name)
       const fileName = modelName + '.ts'
 
       const writeLocation = path.join(modelsWriteLocation, fileName)
@@ -78,12 +77,14 @@ generatorHandler({
       const allFields: { field: string; type: string }[] = []
 
       model.fields.map((field) => {
-        const optionalCondition = !field.isRequired
-        const fieldName = `${field.name}${optionalCondition ? '?' : ''}`
-        const fieldType = `${convertType(field.type as string)!}${
-          field.isList ? '[]' : ''
+        const tsScalarType = `${convertType(field.type as string)}${
+          field.isRequired ? '' : ' | null'
         }`
-        allFields.push({ field: fieldName, type: fieldType })
+
+        const fieldType = `${
+          tsScalarType ? tsScalarType : getModelName(field.type)
+        }${field.isList ? '[]' : ''}`
+        allFields.push({ field: field.name, type: fieldType })
       })
 
       const decoratorObjects = restoreDecoratorObjects(
@@ -106,11 +107,11 @@ generatorHandler({
 
         if (isHide) return { hide: true, type: field.type }
 
-        const fieldType = `${convertType(
-          field.type as string,
-          exportedNamePrefix,
-          exportedNameSuffix,
-        )!}${field.isList ? '[]' : ''}`
+        const tsScalarType = convertType(field.type as string)
+        const fieldType = `${
+          tsScalarType ? tsScalarType : getModelName(field.type)
+        }${field.isList ? '[]' : ''}${field.isRequired ? '' : ' | null'}`
+        console.log('~ fieldType', fieldType)
 
         const decoratorType = () => {
           // Special Cases
@@ -120,9 +121,7 @@ generatorHandler({
             }) => ${type}`
 
           const modifiedFieldType =
-            field.kind === 'scalar'
-              ? field.type
-              : `${exportedNamePrefix}${field.type}${exportedNameSuffix}`
+            field.kind === 'scalar' ? field.type : getModelName(field.type)
 
           const addDynamicImports = (exported: string) => {
             if (dynamicImports.split(',').find((e) => e.trim() === exported)) {
@@ -142,10 +141,15 @@ generatorHandler({
             } else if (field.type === 'Float') {
               addDynamicImports('Float')
               return 'Float'
+            } else if (field.type === 'DateTime') {
+              addDynamicImports('GraphQLISODateTime')
+              return 'GraphQLISODateTime'
             } else if (convertedType === 'Prisma.JsonValue') {
               return 'GraphQLScalars.JSONResolver'
             } else if (convertedType === 'Buffer') {
               return 'GraphQLScalars.ByteResolver'
+            } else if (convertedType === 'Prisma.Decimal') {
+              return 'GraphQLDecimal'
             } else {
               return modifiedFieldType
             }
@@ -162,6 +166,7 @@ generatorHandler({
           if (
             (typeGraphQLType as string).length === 0 ||
             (field.kind === 'scalar' &&
+              field.isRequired &&
               !field.isId &&
               field.type !== 'Json' &&
               field.type !== 'Bytes' &&
@@ -175,14 +180,13 @@ generatorHandler({
           return type(typeGraphQLType as string)
         }
 
-        const optionalCondition = !field.isRequired
-        const fieldName = `${field.name}${optionalCondition ? '?' : ''}`
+        const fieldName = field.name
 
         const decoratorObject = () => {
           let object: any = {}
 
           const editedOptions = decoratorObjects?.find(
-            (e) => e.field === fieldName.replace('?', ''),
+            (e) => e.field === field.name.replace('?', ''),
           )
 
           if (editedOptions) {
@@ -203,7 +207,7 @@ generatorHandler({
             object = { ...object, ...value }
           }
 
-          if (optionalCondition || isPrivate) {
+          if (!field.isRequired || isPrivate) {
             object.nullable = true
           } else {
             object.nullable = undefined
@@ -275,14 +279,17 @@ generatorHandler({
           .map(({ kind, name }) => {
             if (!hidden.find((e: any) => e.type === name)) {
               if (kind === 'object') {
-                const importModelName = `${exportedNamePrefix}${name}${exportedNameSuffix}`
+                const importModelName = getModelName(name)
 
                 // If the Model referenced itself -> return
                 if (importModelName === modelName) {
                   return
                 }
 
-                return IMPORT_TEMPLATE(`{ ${importModelName} }`, `./${name}`)
+                return IMPORT_TEMPLATE(
+                  `{ ${importModelName} }`,
+                  `./${getModelName(name)}`,
+                )
               } else if (kind === 'enum') {
                 const relativePathToEnums = replaceAll(
                   path.relative(
@@ -305,14 +312,21 @@ generatorHandler({
           .filter((e) => e !== 'remove') as string[]),
       ]
 
-      if (scalarFields.join('\n').includes('Prisma.')) {
+      const scalarsJoined = scalarFields.join('\n')
+      if (scalarsJoined.includes('Prisma.')) {
         imports.push(IMPORT_TEMPLATE(`{ Prisma }`, `@prisma/client`))
       }
 
       // Install needed Packages
-      if (scalarFields.join('\n').includes('GraphQLScalars.')) {
+      if (scalarsJoined.includes('GraphQLScalars.')) {
         installPackage(options.generator.config.useYarn, 'graphql-scalars')
         imports.push(IMPORT_TEMPLATE(`GraphQLScalars`, `graphql-scalars`))
+      }
+
+      if (scalarsJoined.includes('GraphQLDecimal')) {
+        imports.push(
+          IMPORT_TEMPLATE(`GraphQLDecimal`, 'prisma-graphql-type-decimal'),
+        )
       }
 
       const classChanges = restoreClassChanges(writeLocation)

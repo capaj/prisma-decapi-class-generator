@@ -1,4 +1,11 @@
 export function toPascalCase(string: string) {
+  if (
+    string.includes('-') === false &&
+    string.includes('_') === false &&
+    string.toLowerCase() !== string
+  ) {
+    return string
+  }
   return `${string}`
     .toLowerCase()
     .replace(new RegExp(/[-_]+/, 'g'), ' ')
