@@ -131,10 +131,10 @@ generatorHandler({
           const getEquivalentType = () => {
             const convertedType = convertType(field.type as string)
 
-            if (field.isId && field.type !== 'Int') {
+            if (field.isId && field.type === 'String') {
               addDynamicImports('ID')
               return 'ID'
-            } else if (field.type === 'Int') {
+            } else if (field.type === 'Int' || field.type === 'BigInt') {
               addDynamicImports('Int')
               return 'Int'
             } else if (field.type === 'Float') {
