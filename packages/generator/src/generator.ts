@@ -134,7 +134,7 @@ generatorHandler({
             if (field.isId && field.type === 'String') {
               addDynamicImports('ID')
               return 'ID'
-            } else if (field.type === 'Int' || field.type === 'BigInt') {
+            } else if (field.type === 'Int') {
               addDynamicImports('Int')
               return 'Int'
             } else if (field.type === 'Float') {
@@ -143,6 +143,8 @@ generatorHandler({
             } else if (field.type === 'DateTime') {
               addDynamicImports('GraphQLISODateTime')
               return 'GraphQLISODateTime'
+            } else if (field.type === 'BigInt') {
+              return 'GraphQLScalars.BigIntResolver'
             } else if (convertedType === 'Prisma.JsonValue') {
               return 'GraphQLScalars.JSONResolver'
             } else if (convertedType === 'Buffer') {

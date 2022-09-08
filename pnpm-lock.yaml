@@ -10,7 +10,7 @@ importers:
 
   packages/generator:
     specifiers:
-      '@prisma/generator-helper': 4.1.1
+      '@prisma/generator-helper': 4.3.1
       '@semantic-release/changelog': ^6.0.1
       '@semantic-release/commit-analyzer': ^9.0.2
       '@semantic-release/git': ^10.0.1
@@ -21,23 +21,23 @@ importers:
       chalk: 4.1.2
       jest: ^27.5.1
       prettier: ^2.7.1
-      semantic-release: ^19.0.3
-      typescript: ^4.7.4
+      semantic-release: ^19.0.5
+      typescript: ^4.8.3
     dependencies:
-      '@prisma/generator-helper': 4.1.1
+      '@prisma/generator-helper': 4.3.1
       chalk: 4.1.2
       prettier: 2.7.1
     devDependencies:
-      '@semantic-release/changelog': 6.0.1_semantic-release@19.0.3
-      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@19.0.3
-      '@semantic-release/git': 10.0.1_semantic-release@19.0.3
-      '@semantic-release/npm': 9.0.1_semantic-release@19.0.3
-      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@19.0.3
+      '@semantic-release/changelog': 6.0.1_semantic-release@19.0.5
+      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@19.0.5
+      '@semantic-release/git': 10.0.1_semantic-release@19.0.5
+      '@semantic-release/npm': 9.0.1_semantic-release@19.0.5
+      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@19.0.5
       '@types/node': 17.0.45
       '@types/prettier': 2.7.0
       jest: 27.5.1
-      semantic-release: 19.0.3
-      typescript: 4.7.4
+      semantic-release: 19.0.5
+      typescript: 4.8.3
 
   packages/server:
     specifiers:
@@ -48,7 +48,6 @@ importers:
       graphql: 15.3.0
       graphql-scalars: ^1.17.0
       prisma: ^4.0.0
-      prisma-typegraphql-types-generator: workspace:*
       reflect-metadata: ^0.1.13
       ts-node-dev: ^1.1.8
       type-graphql: ^1.1.1
@@ -58,10 +57,9 @@ importers:
       class-validator: 0.13.1
       graphql: 15.3.0
       graphql-scalars: 1.17.0_graphql@15.3.0
-      prisma-typegraphql-types-generator: link:../generator
       reflect-metadata: 0.1.13
       ts-node-dev: 1.1.8_typescript@4.5.4
-      type-graphql: 1.1.1_e4ea73dbc9e3a29d9e5fa855ccba6a21
+      type-graphql: 1.1.1_4tvhhw6j4orj3hs7vbk4zotkee
     devDependencies:
       '@prisma/client': 4.0.0_prisma@4.0.0
       '@types/node': 16.11.7
@@ -98,9 +96,13 @@ packages:
       long: 4.0.0
     dev: false
 
-  /@apollographql/apollo-tools/0.5.2:
+  /@apollographql/apollo-tools/0.5.2_graphql@15.3.0:
     resolution: {integrity: sha512-KxZiw0Us3k1d0YkJDhOpVH5rJ+mBfjXcgoRoCcslbgirjgLotKMzOcx4PZ7YTEvvEROmvG7X3Aon41GvMmyGsw==}
     engines: {node: '>=8', npm: '>=6'}
+    peerDependencies:
+      graphql: ^14.2.1 || ^15.0.0
+    dependencies:
+      graphql: 15.3.0
     dev: false
 
   /@apollographql/graphql-playground-html/1.6.29:
@@ -955,8 +957,8 @@ packages:
       prisma: 4.0.0
     dev: true
 
-  /@prisma/debug/4.1.1:
-    resolution: {integrity: sha512-mJ4FmFv37XFUabsGmdTT9xqlf7t0xrKleIMGlTCLBrPk4PG+NtOjqiESPpyvyeGea+DUoISLqKxdefF8rJGDzQ==}
+  /@prisma/debug/4.3.1:
+    resolution: {integrity: sha512-rvDiWvChaKHZO4F9UFX/qG3jqYIYUbkWySAGJG0B9AMhw7k0EtjwYef02p/aLoz7smM3+ZPKJU9E+sqS1nympg==}
     dependencies:
       '@types/debug': 4.1.7
       debug: 4.3.4
@@ -974,10 +976,10 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@prisma/generator-helper/4.1.1:
-    resolution: {integrity: sha512-lg6bdU3BmIee1rLQW3i0coO4X8WreQzvoV8c/Uw5kwD4KRkoeW6DNL54TxgmpXvweedxQye/kpOuLRN4wRVcWQ==}
+  /@prisma/generator-helper/4.3.1:
+    resolution: {integrity: sha512-tWIfbpXG30nvxYhyp0MZj4RX/3B4dnYWj5i4hanK7yTTXt6oRBm4b1veYbC/nW1KcBbJvbp+zvLN0dDSmSldqQ==}
     dependencies:
-      '@prisma/debug': 4.1.1
+      '@prisma/debug': 4.3.1
       '@types/cross-spawn': 6.0.2
       chalk: 4.1.2
       cross-spawn: 7.0.3
@@ -1028,7 +1030,7 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@semantic-release/changelog/6.0.1_semantic-release@19.0.3:
+  /@semantic-release/changelog/6.0.1_semantic-release@19.0.5:
     resolution: {integrity: sha512-FT+tAGdWHr0RCM3EpWegWnvXJ05LQtBkQUaQRIExONoXjVjLuOILNm4DEKNaV+GAQyJjbLRVs57ti//GypH6PA==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -1038,10 +1040,10 @@ packages:
       aggregate-error: 3.1.0
       fs-extra: 9.1.0
       lodash: 4.17.21
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
     dev: true
 
-  /@semantic-release/commit-analyzer/9.0.2_semantic-release@19.0.3:
+  /@semantic-release/commit-analyzer/9.0.2_semantic-release@19.0.5:
     resolution: {integrity: sha512-E+dr6L+xIHZkX4zNMe6Rnwg4YQrWNXK+rNsvwOPpdFppvZO1olE2fIgWhv89TkQErygevbjsZFSIxp+u6w2e5g==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -1054,7 +1056,7 @@ packages:
       import-from: 4.0.0
       lodash: 4.17.21
       micromatch: 4.0.5
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1068,7 +1070,7 @@ packages:
     engines: {node: '>=14.17'}
     dev: true
 
-  /@semantic-release/git/10.0.1_semantic-release@19.0.3:
+  /@semantic-release/git/10.0.1_semantic-release@19.0.5:
     resolution: {integrity: sha512-eWrx5KguUcU2wUPaO6sfvZI0wPafUKAMNC18aXY4EnNcrZL86dEmpNVnC9uMpGZkmZJ9EfCVJBQx4pV4EMGT1w==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -1082,12 +1084,12 @@ packages:
       lodash: 4.17.21
       micromatch: 4.0.5
       p-reduce: 2.1.0
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@semantic-release/github/8.0.5_semantic-release@19.0.3:
+  /@semantic-release/github/8.0.5_semantic-release@19.0.5:
     resolution: {integrity: sha512-9pGxRM3gv1hgoZ/muyd4pWnykdIUVfCiev6MXE9lOyGQof4FQy95GFE26nDcifs9ZG7bBzV8ue87bo/y1zVf0g==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -1108,14 +1110,14 @@ packages:
       mime: 3.0.0
       p-filter: 2.1.0
       p-retry: 4.6.2
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: true
 
-  /@semantic-release/npm/9.0.1_semantic-release@19.0.3:
+  /@semantic-release/npm/9.0.1_semantic-release@19.0.5:
     resolution: {integrity: sha512-I5nVZklxBzfMFwemhRNbSrkiN/dsH3c7K9+KSk6jUnq0rdLFUuJt7EBsysq4Ir3moajQgFkfEryEHPqiKJj20g==}
     engines: {node: '>=16 || ^14.17'}
     peerDependencies:
@@ -1132,12 +1134,12 @@ packages:
       rc: 1.2.8
       read-pkg: 5.2.0
       registry-auth-token: 4.2.2
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
       semver: 7.3.7
       tempy: 1.0.1
     dev: true
 
-  /@semantic-release/release-notes-generator/10.0.3_semantic-release@19.0.3:
+  /@semantic-release/release-notes-generator/10.0.3_semantic-release@19.0.5:
     resolution: {integrity: sha512-k4x4VhIKneOWoBGHkx0qZogNjCldLPRiAjnIpMnlUh6PtaWXp/T+C9U7/TaNDDtgDa5HMbHl4WlREdxHio6/3w==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -1153,7 +1155,7 @@ packages:
       into-stream: 6.0.0
       lodash: 4.17.21
       read-pkg-up: 7.0.1
-      semantic-release: 19.0.3
+      semantic-release: 19.0.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1589,7 +1591,7 @@ packages:
     peerDependencies:
       graphql: ^15.3.0 || ^16.0.0
     dependencies:
-      '@apollographql/apollo-tools': 0.5.2
+      '@apollographql/apollo-tools': 0.5.2_graphql@15.3.0
       '@apollographql/graphql-playground-html': 1.6.29
       '@graphql-tools/mock': 8.4.3_graphql@15.3.0
       '@graphql-tools/schema': 8.3.1_graphql@15.3.0
@@ -1629,7 +1631,7 @@ packages:
       graphql: 15.3.0
     dev: false
 
-  /apollo-server-express/3.5.0_express@4.17.1+graphql@15.3.0:
+  /apollo-server-express/3.5.0_q5txmmkftoyc6otojm7lo3m6he:
     resolution: {integrity: sha512-eFyBC4ate/g5GrvxM+HrtiElxCEbvG+CiJ0/R1i62L+wzXDhgD6MU0SW17ceS1mpBJgDxURu/VS5hUSNyWMa3Q==}
     engines: {node: '>=12.0'}
     peerDependencies:
@@ -1649,6 +1651,8 @@ packages:
       express: 4.17.1
       graphql: 15.3.0
       parseurl: 1.3.3
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /apollo-server-plugin-base/3.4.0_graphql@15.3.0:
@@ -1679,9 +1683,11 @@ packages:
       graphql: ^15.3.0 || ^16.0.0
     dependencies:
       apollo-server-core: 3.5.0_graphql@15.3.0
-      apollo-server-express: 3.5.0_express@4.17.1+graphql@15.3.0
+      apollo-server-express: 3.5.0_q5txmmkftoyc6otojm7lo3m6he
       express: 4.17.1
       graphql: 15.3.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /arg/4.1.3:
@@ -1841,6 +1847,8 @@ packages:
       qs: 6.7.0
       raw-body: 2.4.0
       type-is: 1.6.18
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /bottleneck/2.19.5:
@@ -2302,6 +2310,11 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: false
@@ -2608,6 +2621,8 @@ packages:
       type-is: 1.6.18
       utils-merge: 1.0.1
       vary: 1.1.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /external-editor/3.1.0:
@@ -2685,6 +2700,8 @@ packages:
       parseurl: 1.3.3
       statuses: 1.5.0
       unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /find-node-modules/2.1.3:
@@ -4954,16 +4971,16 @@ packages:
       xmlchars: 2.2.0
     dev: true
 
-  /semantic-release/19.0.3:
-    resolution: {integrity: sha512-HaFbydST1cDKZHuFZxB8DTrBLJVK/AnDExpK0s3EqLIAAUAHUgnd+VSJCUtTYQKkAkauL8G9CucODrVCc7BuAA==}
+  /semantic-release/19.0.5:
+    resolution: {integrity: sha512-NMPKdfpXTnPn49FDogMBi36SiBfXkSOJqCkk0E4iWOY1tusvvgBwqUmxTX1kmlT6kIYed9YwNKD1sfPpqa5yaA==}
     engines: {node: '>=16 || ^14.17'}
     hasBin: true
     dependencies:
-      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@19.0.3
+      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@19.0.5
       '@semantic-release/error': 3.0.0
-      '@semantic-release/github': 8.0.5_semantic-release@19.0.3
-      '@semantic-release/npm': 9.0.1_semantic-release@19.0.3
-      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@19.0.3
+      '@semantic-release/github': 8.0.5_semantic-release@19.0.5
+      '@semantic-release/npm': 9.0.1_semantic-release@19.0.5
+      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@19.0.5
       aggregate-error: 3.1.0
       cosmiconfig: 7.0.1
       debug: 4.3.4
@@ -5038,6 +5055,8 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.5.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /serve-static/1.14.1:
@@ -5048,6 +5067,8 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.17.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /setprototypeof/1.1.1:
@@ -5528,7 +5549,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /type-graphql/1.1.1_e4ea73dbc9e3a29d9e5fa855ccba6a21:
+  /type-graphql/1.1.1_4tvhhw6j4orj3hs7vbk4zotkee:
     resolution: {integrity: sha512-iOOWVn0ehCYMukmnXStbkRwFE9dcjt7/oDcBS1JyQZo9CbhlIll4lHHps54HMEk4A4c8bUPd+DjK8w1/ZrxB4A==}
     engines: {node: '>= 10.3'}
     requiresBuild: true
@@ -5567,18 +5588,18 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
-  /typescript/4.7.4:
-    resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
-
   /typescript/4.8.2:
     resolution: {integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
     optional: true
+
+  /typescript/4.8.3:
+    resolution: {integrity: sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
 
   /uglify-js/3.16.3:
     resolution: {integrity: sha512-uVbFqx9vvLhQg0iBaau9Z75AxWJ8tqM9AV890dIZCLApF4rTcyHwmAvLeEdYRs+BzYWu8Iw81F79ah0EfTXbaw==}
