@@ -42,6 +42,7 @@ generator PrismaTypeGraphQLTypesGenerator {
   exportedNameSuffix = "GQL" // Optional if you want to add a suffix to the end of your exported class names and enums
   exportedNamePrefix = "TYPE" // Optional if you want to prefix your exported class names and enums
   pascalCaseModelNames = false // Optional if you want to rename models to pascal case convention
+  useDotPrismaImport = false // on some project with pnpm you might have trouble with @prisma/client import. This generates .prisma/client instead
 }
 ```
 
