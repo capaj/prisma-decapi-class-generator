@@ -315,7 +315,15 @@ generatorHandler({
 
       const scalarsJoined = scalarFields.join('\n')
       if (scalarsJoined.includes('Prisma.')) {
-        imports.push(IMPORT_TEMPLATE(`{ Prisma }`, `@prisma/client`))
+        imports.push(
+          IMPORT_TEMPLATE(
+            `{ Prisma }`,
+            // on some projects I had trouble with the @prisma/client import
+            options.generator.config.useDotPrismaImport
+              ? `.prisma/client`
+              : `@prisma/client`,
+          ),
+        )
       }
 
       // Install needed Packages
